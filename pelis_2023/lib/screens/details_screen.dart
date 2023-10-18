@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_2023/models/models.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final String movie= 
-    ModalRoute.of(context)?.settings.arguments.toString() ?? 
-    'Sin nombre';
-    return const Scaffold(
+    
+    final Movie movie= 
+    ModalRoute.of(context)?.settings.arguments as Movie;
+    return  Scaffold(
       body: CustomScrollView(
         //widget con comportamiento definido alm scroll
-        slivers: [_CustomAppBar(),
-        SliverList(delegate: SliverChildListDelegate.fixed([
-          _PosterAndTitle(),
+        slivers: [
+         _CustomAppBar(),
+         SliverList(
+          delegate: SliverChildListDelegate.fixed([
+          _PosterAndTitle(movie: movie,),
           _Overview(),
           _ActoresSlider(),
-        ])
+        ]
+        )
         )
         ],
       )
@@ -55,8 +60,10 @@ class _CustomAppBar extends StatelessWidget {
   }
 }
 
+
 class _PosterAndTitle extends StatelessWidget {
-  const _PosterAndTitle({super.key});
+  final Movie movie;
+  const _PosterAndTitle({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +76,7 @@ class _PosterAndTitle extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
               placeholder: AssetImage('assets/no-image.jpg'),
-              image: AssetImage('assets/no-image.jpg'),
+              image: NetworkImage(movie.fullPosterImg),
               height: 200,
             ),
           ),
@@ -78,13 +85,13 @@ class _PosterAndTitle extends StatelessWidget {
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('movie.title',
+              Text(movie.title,//aqui nomas
               style: TextStyle(fontSize: 30),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
               ),
               Text(
-                'movie.titleOriginal',
+                movie.originalTitle,
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -99,7 +106,7 @@ class _PosterAndTitle extends StatelessWidget {
                   ),
                   SizedBox(width: 5),
                   Text(
-                'movie.voteAverage',
+                    'movie.voteAverage',
                    style: TextStyle(fontSize: 18),
                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,

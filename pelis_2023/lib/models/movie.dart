@@ -13,7 +13,7 @@ class Movie {
     DateTime releaseDate;
     String title;
     bool video;
-    double voteAverage;
+    double voteAverage;  
     int voteCount;
 
     Movie({
@@ -33,11 +33,18 @@ class Movie {
         required this.voteCount,
     });
 
-    factory Movie.fromRawJson(String str) => Movie.fromJson(json.decode(str));
+    get fullPosterImg {
+    if (this.posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
+    }
+    return 'https://i.stack.imgur.com/GNhxO.png';
+  }
 
-    //String toRawJson() => json.encode(toJson());
+  factory Movie.fromRawJson(String str) => Movie.fromJson(json.decode(str));
 
-    factory Movie.fromJson(Map<String, dynamic> json) => Movie(
+  //String toRawJson() => json.encode(toJson());
+
+  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
@@ -52,9 +59,9 @@ class Movie {
         video: json["video"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
-    );
-
-   /* Map<String, dynamic> toJson() => {
+      );
+/*
+  Map<String, dynamic> toJson() => {
         "adult": adult,
         "backdrop_path": backdropPath,
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
@@ -64,32 +71,28 @@ class Movie {
         "overview": overview,
         "popularity": popularity,
         "poster_path": posterPath,
-        "release_date": "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
+        "release_date":
+            "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
         "title": title,
         "video": video,
         "vote_average": voteAverage,
         "vote_count": voteCount,
-    };
-}
+      };
+}*/
+/*
+enum OriginalLanguage { EN, ZH }
 
-enum OriginalLanguage {
-    EN,
-    ZH
-}
-
-final originalLanguageValues = EnumValues({
-    "en": OriginalLanguage.EN,
-    "zh": OriginalLanguage.ZH
-});
+final originalLanguageValues =
+    EnumValues({"en": OriginalLanguage.EN, "zh": OriginalLanguage.ZH});
 
 class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
 
-    EnumValues(this.map);
+  EnumValues(this.map);
 
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }*/
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }*/
 }
