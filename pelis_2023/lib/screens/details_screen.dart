@@ -13,11 +13,11 @@ class DetailsScreen extends StatelessWidget {
       body: CustomScrollView(
         //widget con comportamiento definido alm scroll
         slivers: [
-         _CustomAppBar(),
+         _CustomAppBar(movie: movie,),//agrege movie
          SliverList(
           delegate: SliverChildListDelegate.fixed([
           _PosterAndTitle(movie: movie,),
-          _Overview(),
+          _Overview(movie: movie,),
           _ActoresSlider(),
         ]
         )
@@ -29,13 +29,14 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  const _CustomAppBar({super.key});
-
+  final Movie movie;//se agrego 
+  const _CustomAppBar({super.key, required this.movie}); //cambie aqui el rquire porque no lo tenia
+  
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Color.fromARGB(255, 0, 255, 221),
-      expandedHeight: 100,
+      expandedHeight: 150,
       floating: false,
       pinned: true,
       //widget para que se ajuste al tamaño
@@ -47,13 +48,15 @@ class _CustomAppBar extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
-          child: Text('movie.title',
+          child: Text(movie.title,
           style: TextStyle(fontSize: 18),
           ),
         ),
-        background: FadeInImage(
+         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: AssetImage('assets/loading.gif'),
+          image: AssetImage('assets/no-image.jpg'),
+         // placeholder: AssetImage('assets/loading.gif'),
+          //image: AssetImage('assets/loading.gif'),
         ),
       ),
     );
@@ -106,7 +109,7 @@ class _PosterAndTitle extends StatelessWidget {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    'movie.voteAverage',
+                    movie.voteAverage.toString(),
                    style: TextStyle(fontSize: 18),
                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -124,7 +127,8 @@ class _PosterAndTitle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({super.key});
+  final Movie movie;
+  const _Overview({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +137,7 @@ class _Overview extends StatelessWidget {
         horizontal: 20, 
         vertical: 10,
       ),
-      child: Text('Deserunt ut ut cupidatat tempor aute quis pariatur qui veniam ea excepteur duis do. Qui deserunt dolore in consequat tempor cillum sint sunt esse nostrud culpa. Cupidatat mollit amet consequat cillum ea cupidatat. Lorem adipisicing culpa est mollit occaecat mollit. Culpa elit est ullamco reprehenderit elit culpa dolore ut occaecat laboris dolore dolore.',
+      child: Text(movie.overview,
       textAlign: TextAlign.justify,
       style: TextStyle(fontSize: 15),
       ),

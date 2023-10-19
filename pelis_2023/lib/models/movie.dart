@@ -13,7 +13,7 @@ class Movie {
     DateTime releaseDate;
     String title;
     bool video;
-    double voteAverage;  
+    double voteAverage;  //double
     int voteCount;
 
     Movie({
@@ -61,6 +61,7 @@ class Movie {
         voteCount: json["vote_count"],
       );
 /*
+
   Map<String, dynamic> toJson() => {
         "adult": adult,
         "backdrop_path": backdropPath,
